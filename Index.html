@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes, viewport-fit=cover">
+  <title>NUMERIK-UTS • Modeler & Bisection</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="main-container">
+    <!-- HEADER -->
+    <div class="glass-card" style="text-align: center; padding-bottom: 1.5rem;">
+      <h1>⚡ NUMERIK-UTS</h1>
+      <div class="subtitle">Model fitting • Bisection • Visualisasi surgawi</div>
+    </div>
+
+    <!-- INPUT & KONTROL -->
+    <div class="flex-row">
+      <div class="col">
+        <div class="glass-card">
+          <h2 style="font-weight: 600; margin-bottom: 0.8rem; display: flex; gap:0.4rem; font-size:1.1rem;">📊 Data Input <span style="font-size:0.7rem; font-weight:300;">(min 16 pasang x,y)</span></h2>
+          <textarea id="dataInput" placeholder="Format: x y (spasi/tab/koma) - satu baris per data&#10;Contoh:&#10;1 2&#10;2 3.5&#10;3 5&#10;...&#10;(minimal 16 baris)">1 2
+2 3.5
+3 5
+4 6.8
+5 8.5
+6 10
+7 11.5
+8 13
+9 14.2
+10 15.3
+11 16.2
+12 17
+13 17.7
+14 18.3
+15 18.8
+16 19.2
+17 19.5
+18 19.7
+19 19.9
+20 20</textarea>
+          <div class="flex-buttons">
+            <button class="btn" id="analyzeBtn"><span>✨</span> ANALYZE & FIT</button>
+            <button class="btn btn-secondary" id="loadSampleBtn"><span>📂</span> Sample</button>
+          </div>
+          <div id="inputError" class="error-text" style="margin-top:0.5rem;"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="glass-card" id="resultCard" style="display: flex; flex-direction: column; gap:0.8rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap:0.5rem;">
+            <span style="font-weight:600; font-size:1rem;">🏆 Model Terbaik</span>
+            <span class="model-badge" id="modelName">-</span>
+          </div>
+          <div class="equation" id="equationDisplay">y = ...</div>
+          <div><span style="color:#c4b5fd;">R² = </span><span id="rSquared" style="font-weight:700;">-</span></div>
+          <div class="chart-container">
+            <canvas id="fitChart"></canvas>
+          </div>
+          <div style="font-size:0.75rem; color:#b4a0da;" id="modelReason"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREDIKSI & BISECTION -->
+    <div class="flex-row">
+      <div class="col">
+        <div class="glass-card">
+          <h3 style="margin-bottom:0.8rem; font-size:1.1rem;">🔮 Prediksi Langsung (Evaluasi f(x))</h3>
+          <div class="input-group">
+            <input type="number" id="predictX" placeholder="Masukkan x" step="any">
+            <button class="btn btn-secondary" id="predictBtn">Hitung y</button>
+          </div>
+          <div style="margin-top:0.8rem; font-size:1rem;">📈 y = <span id="predictResult" class="result-value">-</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="glass-card">
+          <h3 style="margin-bottom:0.8rem; font-size:1.1rem;">🎯 Inversi dengan Bisection (Cari x untuk y target)</h3>
+          <div class="input-group">
+            <input type="number" id="targetY" placeholder="Target y" step="any">
+            <button class="btn btn-secondary" id="bisectionBtn">Cari x</button>
+          </div>
+          <div style="margin-top:0.8rem; display: flex; gap:0.6rem; flex-wrap:wrap;">
+            <input type="number" id="manualA" placeholder="Batas a (opsional)" step="any" style="width:110px; flex:1;">
+            <input type="number" id="manualB" placeholder="Batas b (opsional)" step="any" style="width:110px; flex:1;">
+          </div>
+          <div id="bisectionError" class="error-text" style="margin-top:0.4rem;"></div>
+          <div style="margin-top:0.8rem; font-size:1rem;">🎯 x ≈ <span id="bisectionResult" class="result-value">-</span></div>
+          <div style="margin-top:0.3rem; color:#c4b5fd; font-size:0.8rem;" id="bisectionErrors"></div>
+          <div style="margin-top:0.8rem;" id="tableContainer"></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; color:#7e6ab0; font-size:0.7rem; margin-top:0.3rem; padding:0 0.5rem;">
+      Dibuat untuk tugas project • Metode Bisection • Polynomial, Eksponensial, Saturasi
+    </div>
+  </div>
+
+  <!-- Custom Script -->
+  <script src="script.js"></script>
+</body>
+</html>
